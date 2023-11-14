@@ -1,0 +1,8 @@
+contest_name,crownAmount,gameType,id,entry_fee,entry_max,prizeAmount,start_time,total_entries,max_total_entries,draft_group,entry_fee_to_total_prize_ratio
+NBA $300K Fadeaway [$100K to 1st],8250,Classic,116485671,15,150,3e+05,Sun 7:00PM,15698,23529,58214,20000
+NBA $7K And-One (Night),550,Classic,116480749,1,20,7000,Sun 9:00PM,4842,8323,58218,7000
+NBA $4K And-One,550,Classic,116607416,1,20,4000,Sun 7:00PM,759,4756,58214,4000
+NBA $50K Step-Back Fadeaway [$12.5K to 1st]  (Night),8250,Classic,116505511,15,117,50000,Sun 9:00PM,1732,3921,58218,3333.33333333333
+NBA $8K Sharpshooter,1650,Classic,116600308,3,20,8000,Sun 7:00PM,1437,3170,58214,2666.66666666667
+NBA $5K Stretch Four [3 Entry Max],2200,Classic,116480705,4,3,5000,Sun 7:00PM,1290,1486,58214,1250
+NBA $5K Four Point Play [20 Entry Max] (Night),2200,Classic,116480748,4,20,5000,Sun 9:00PM,824,1486,58218,1250

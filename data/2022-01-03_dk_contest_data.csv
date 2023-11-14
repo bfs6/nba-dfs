@@ -1,0 +1,14 @@
+contest_name,crownAmount,gameType,id,entry_fee,entry_max,prizeAmount,start_time,total_entries,max_total_entries,draft_group,entry_fee_to_total_prize_ratio
+NBA $12.5K And-One (Night),550,Classic,121855836,1,20,12500,Mon 10:00PM,7845,14863,61642,12500
+NBA $10K And-One (Night),550,Classic,121899395,1,20,10000,Tue 8:00PM,24,11890,61658,10000
+NBA $100K Fadeaway [$25K to 1st] (Night),8250,Classic,121871427,15,150,1e+05,Mon 10:00PM,4340,7843,61642,6666.66666666667
+NBA $25K Zone [$5K to 1st],2750,Classic,121899332,5,150,25000,Tue 7:00PM,1,5945,61653,5000
+NBA $10K mini-MAX [150 Entry Max],1100,Classic,121899335,2,150,10000,Tue 7:00PM,5,5945,61653,5000
+NBA $26K Jab Step [$5K to 1st],3300,Classic,121899324,6,150,26000,Tue 7:00PM,2,5098,61653,4333.33333333333
+NBA $2 Double Up,1100,Classic,121899359,2,20,5000,Tue 7:00PM,2,2873,61653,2500
+NBA $6K Hot Shot [3 Entry Max],1650,Classic,121899333,3,3,6000,Tue 7:00PM,2,2378,61653,2000
+NBA $6K Sharpshooter [20 Entry Max],1650,Classic,121899334,3,20,6000,Tue 7:00PM,1,2378,61653,2000
+NBA $6K Four Point Play [20 Entry Max] (Night),2200,Classic,121855835,4,20,6000,Mon 10:00PM,899,1783,61642,1500
+NBA $5K Four Point Play [20 Entry Max] (Night),2200,Classic,121899400,4,20,5000,Tue 8:00PM,1,1486,61658,1250
+NBA $5 Double Up,2750,Classic,121899357,5,41,6000,Tue 7:00PM,0,1379,61653,1200
+NBA $5 Double Up,2750,Classic,121899358,5,34,5000,Tue 7:00PM,0,1149,61653,1000

@@ -1,0 +1,4 @@
+contest_name,crownAmount,gameType,id,entry_fee,entry_max,prizeAmount,start_time,total_entries,max_total_entries,draft_group,entry_fee_to_total_prize_ratio
+NBA $3K And-One [20 Entry Max],550,Classic,116319890,1,20,3000,Thu 7:30PM,1654,3567,58120,3000
+NBA $7.5K Sharpshooter [20 Entry Max],1650,Classic,116313015,3,20,7500,Thu 7:30PM,2689,2972,58120,2500
+NBA $1.75K And-One [20 Entry Max] (Night),550,Classic,116302973,1,20,1750,Thu 8:00PM,1866,2080,58124,1750
