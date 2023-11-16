@@ -8,18 +8,19 @@ library(lpSolve)
 library(lpSolveAPI)
 library(janitor)
 library(fuzzyjoin)
+library(coach)
 
 
 ####Source Other Scripts####
-source("R/scrape-player-projections.R")
-source("R/draftkings-scrape-nba.R")
+source("R/01-scrape_player_projections.R")
+source("R/02-draftkings_scrape_nba.R")
 
 
 ####Read in Data####
 #source("ScrapeData.R")
 ##Read in Projections
-fullDF <- fread(paste0("data/", Sys.Date(), "_points_projections.csv"), stringsAsFactors = F, sep = ",")
-fullDF_number_fire <- fread(paste0("data/", Sys.Date(), "_points_projections_number_fire.csv"), stringsAsFactors = F, sep = ",")
+fullDF <- fread(paste0("data/", Sys.Date(), "_points_projections.csv"), stringsAsFactors = FALSE, sep = ",")
+fullDF_number_fire <- fread(paste0("data/", Sys.Date(), "_points_projections_number_fire.csv"), stringsAsFactors = FALSE, sep = ",")
 # fullDF <- filter(fullDF, avg_type == "weighted")
 # fullDF$full_name <- paste(fullDF$first_name, fullDF$last_name, sep = " ")
 # fullDFRefIDs <- fullDF[,c("full_name", "id")]
@@ -50,7 +51,7 @@ full_dk_competitions <-
   filter(gameType != "Showdown Captain Mode") %>% 
   as.data.frame()
 comp_id <- full_dk_competitions$id[1]
-comp_id <- 123141959
+# comp_id <- 123141959
 comp_to_join <- 
   full_dk_competitions %>% 
   filter(id == comp_id)
@@ -75,14 +76,14 @@ player_salaries <-
   ungroup() %>%
   stringdist_left_join(fullDF_number_fire %>%
                          filter(fp > 0) %>%
-                         select(full_name, fp) %>% 
-                         rename(fp_number_fire = fp, 
-                                display_name = full_name), 
+                         select(full_name, fp) %>%
+                         rename(fp_number_fire = fp,
+                                display_name = full_name),
                        by = c(display_name = "display_name")) %>%
-  select(-display_name.y) %>% 
+  select(-display_name.y) %>%
   rename(display_name = display_name.x) %>%
   pivot_longer(cols = c("display_name", "short_name"), names_to = "name_type", values_to = "player_name") %>% 
-  select(player_name, player_id, salary, team_abbreviation, fp_number_fire) %>%
+  select(any_of(c("player_name", "player_id", "salary", "team_abbreviation", "fp_number_fire"))) %>%
   rename(team = team_abbreviation, salary_num = salary) %>% 
   distinct()
 
@@ -107,9 +108,10 @@ full_data <-
   distinct() %>% 
   filter(player_name == name) %>% 
   rename("team" = "team.x") %>%
-  select(player_name, player_id, salary_num, pos, dk_fp_projected, fp_number_fire, team) %>% 
-  pivot_longer(cols = contains("fp"), names_to = "fp_source", values_to = "fp") %>% 
-  filter(player_id != 1231792)
+  select(any_of(c("player_name", "player_id", "salary_num", "pos", "dk_fp_projected", "fp_number_fire", "team"))) %>%
+  pivot_longer(cols = contains("fp"), names_to = "fp_source", values_to = "fp") 
+# %>% 
+#   filter(player_id != 1231792)
 
 ####Function for Linear Optimal Lineup####
 optimizeLineup <- function(ourPlayers, ourPlayersPrice, draftedPlayers, maxPrice, minPrice){
@@ -180,7 +182,7 @@ optimizeLineup <- function(ourPlayers, ourPlayersPrice, draftedPlayers, maxPrice
       maxrhs <- c(3, 3, 3, 3, 2, 3, 3, 8, rep(1, length(idVarsKeep)), maxPrice) #max salary,qb,rb,wr,te,flex,def
       minrhs <- c(1, 1, 1, 1, 1, 3, 3, 8, rep(1, length(idVarsKeep)), minPrice) #min salary, #qb, rb, wr, te, flex, def
     }else{
-      maxrhs <- c(3, 3, 3, 3, 2, 3, 3, 8, maxPrice) #max salary,qb,rb,wr,te,flex,def
+      maxrhs <- c(2, 3, 3, 3, 2, 4, 4, 8, maxPrice) #max salary,qb,rb,wr,te,flex,def
       minrhs <- c(1, 1, 1, 1, 1, 3, 3, 8, minPrice) #min salary, #qb, rb, wr, te, flex, def
     }
     
@@ -206,6 +208,7 @@ optimizeLineup <- function(ourPlayers, ourPlayersPrice, draftedPlayers, maxPrice
   names(optimal_list) <- fp_sources
   return(optimal_list)
 }
+
 
 ####Test Function####
 ourPlayers <- c()

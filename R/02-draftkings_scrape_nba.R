@@ -26,9 +26,9 @@ flatten_weird_list <- function(listy){
 
 ####Start Draft Kings Scrape####
 ##Getting NFL Contests
-nfl_contests_url <- "https://www.draftkings.com/lobby/getcontests?sport=NBA"
+nba_contests_url <- "https://www.draftkings.com/lobby/getcontests?sport=NBA"
 contest_data_raw <- 
-  nfl_contests_url %>% 
+  nba_contests_url %>% 
   httr::GET(config = httr::config(ssl_verifypeer = FALSE)) %>% 
   httr::content(as = "text") %>% 
   jsonlite::fromJSON()  
@@ -64,6 +64,7 @@ contest_specific_urls <- map_chr(filtered_contest_data$id %>%
 
 ##Draft Group Players
 draft_group_base_url <- "https://api.draftkings.com/draftgroups/v1/draftgroups/DRAFT_GROUP/draftables"
+
 draft_group_urls <- 
   contest_data %>%
   pull(draft_group) %>% 
@@ -71,16 +72,22 @@ draft_group_urls <-
   as.character() %>% 
   map_chr(~str_replace_all(draft_group_base_url, "DRAFT_GROUP", .x) %>% 
             paste0(".json"))
+
 draft_group_ids <- 
   contest_data %>% 
   pull(draft_group) %>% 
   unique()
+
 httr::set_config(httr::config(ssl_verifypeer=0L))
+
 draft_group_data <- 
   draft_group_urls %>% 
   map(~content(httr::GET(.)))
+
 names(draft_group_data) <- draft_group_ids
+
 httr::set_config(httr::config(ssl_verifypeer=1L))
+
 draftable_players <- 
   draft_group_data %>% 
   map(~{ .[[1]] }) %>%
@@ -89,15 +96,30 @@ draftable_players <-
         group_by(playerId) %>% 
         slice(1) %>% 
         ungroup())
+
 competitions <- 
   draft_group_data %>% 
   map(~{ .[[2]] }) %>%
   map(~flatten_weird_list(.)) %>% 
   bind_rows()
 # names(draftable_players) <- draft_group_ids
+
 draftable_players_final <- 
   draftable_players %>% 
-  bind_rows(.id = "draft_group")
+  bind_rows(.id = "draft_group") %>% 
+  mutate(draftStatAttributes.sortValue.1_new = ifelse(draftStatAttributes.value.1 == "-", draftStatAttributes.sortValue, draftStatAttributes.sortValue.1), 
+         draftStatAttributes.id_new = ifelse(draftStatAttributes.value.1 == "-", draftStatAttributes.id.1, draftStatAttributes.id), 
+         draftStatAttributes.id.1_new = ifelse(draftStatAttributes.value.1 == "-", draftStatAttributes.id.1, draftStatAttributes.id), 
+         draftStatAttributes.value.1_new = ifelse(draftStatAttributes.value.1 == "-", draftStatAttributes.value, draftStatAttributes.value.1), 
+         draftStatAttributes.value_new = ifelse(draftStatAttributes.value.1 == "-", NA, draftStatAttributes.value), 
+         draftStatAttributes.sortValue_new = ifelse(draftStatAttributes.value.1 == "-", NA, draftStatAttributes.sortValue)) %>% 
+  rename_at(vars(ends_with("_new")), 
+                ~paste0("new_", .x) %>% 
+                  str_replace_all("_new", "")) %>% 
+  dplyr::select(-starts_with("draftStatAttributes")) %>% 
+  rename_at(vars(starts_with("new_")), 
+                ~.x %>% 
+                  str_replace_all("new_", ""))
 
 ##Save Data
 fwrite(draftable_players_final, file = paste0("data/", Sys.Date(), "_dk_draftable_players.csv"))

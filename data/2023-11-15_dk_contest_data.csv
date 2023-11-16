@@ -1,0 +1,12 @@
+contest_name,crownAmount,gameType,id,entry_fee,entry_max,prizeAmount,start_time,total_entries,max_total_entries,draft_group,entry_fee_to_total_prize_ratio
+NBA $30K And-One [20 Entry Max],550,Classic,154371420,1,20,30000,Thu 7:30PM,129,35671,95955,30000
+NBA $300K Fadeaway [$100K to 1st],8250,Classic,154371424,15,150,3e+05,Thu 7:30PM,40,23529,95955,20000
+NBA $15K And-One (Night),550,Classic,154290678,1,20,15000,Wed 10:00PM,15533,17835,95949,15000
+NBA $60K Four Point Play [20 Entry Max],2200,Classic,154371419,4,20,60000,Thu 7:30PM,65,17835,95955,15000
+NBA $30K Jab Step [$5K to 1st] (Night),3300,Classic,154290686,6,150,30000,Wed 10:00PM,5321,5882,95949,5000
+NBA $25K Zone [$5K to 1st],2750,Classic,154371418,5,150,25000,Thu 7:30PM,19,5945,95955,5000
+NBA $26K Jab Step [$5K to 1st],3300,Classic,154371427,6,150,26000,Thu 7:30PM,15,5098,95955,4333.33333333333
+NBA $8.5K mini-MAX [150 Entry Max],1100,Classic,154355638,2,150,8500,Thu 7:30PM,33,5053,95955,4250
+NBA $10K Four Point Play [20 Entry Max] (Night),2200,Classic,154290687,4,20,10000,Wed 10:00PM,2290,2972,95949,2500
+NBA $2 Double Up,1100,Classic,154355651,2,20,3000,Thu 7:30PM,26,1724,95955,1500
+NBA $5K Stretch Four [3 Entry Max],2200,Classic,154355657,4,3,5000,Thu 7:30PM,13,1486,95955,1250
